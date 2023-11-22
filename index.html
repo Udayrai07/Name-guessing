@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Name Game</title>
+    <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    background-color: #3498db;
+    color: #fff;
+    text-align: center;
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1 {
+    color: #ecf0f1;
+    margin-bottom: 20px;
+}
+
+#game-container {
+    background-color: #2c3e50;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 300px;
+}
+
+p {
+    color: #ecf0f1;
+    margin-bottom: 15px;
+}
+
+input {
+    padding: 10px;
+    margin-top: 10px;
+    width: 200px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+input::placeholder {
+    color: #bdc3c7;
+}
+
+button {
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #27ae60;
+}
+
+#result {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #e74c3c;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Guess the Name Game</h1>
+
+    <div id="game-container">
+        <p>Can you guess the name?</p>
+        <input type="text" id="guessInput" placeholder="Type your guess">
+        <button onclick="checkGuess()">Submit Guess</button>
+        <button onclick="getHint()">Get Hint</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        // Predefined names and corresponding hints
+        const names = ["Uday", "Yash", "Tushar", "Vishal", "Satvik", "Shrikant"];
+        const hints = [
+            "Hint 1: The name starts with the letter",
+            "Hint 2: The name ends with the letter",
+            "Hint 3: The name has a length of",
+            "Hint 4: The second letter of the name is",
+            "Hint 5: The name contains the letter",
+            "Hint 6: The name is a common name"
+        ];
+
+        let currentNameIndex = 0;
+        let hintIndex = 0;
+
+        function checkGuess() {
+            const userGuess = document.getElementById("guessInput").value;
+
+            if (userGuess.toLowerCase() === names[currentNameIndex].toLowerCase()) {
+                document.getElementById("result").innerHTML = "Congratulations! You guessed the correct name.";
+                // Move to the next name
+                currentNameIndex = (currentNameIndex + 1) % names.length;
+                hintIndex = 0;
+                document.getElementById("guessInput").value = "";
+            } else {
+                document.getElementById("result").innerHTML = "Sorry, that's not the correct name. Try again!";
+            }
+        }
+
+        function getHint() {
+            if (hintIndex < hints.length) {
+                const currentHint = hints[hintIndex].replace("letter", `"${names[currentNameIndex].charAt(0)}"`).replace("length", names[currentNameIndex].length);
+                alert(currentHint);
+                hintIndex++;
+            } else {
+                alert("No more hints available!");
+            }
+        }
+    </script>
+</body>
+</html>
